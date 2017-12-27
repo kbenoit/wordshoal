@@ -1,4 +1,5 @@
 #' @import quanteda
+#' @importFrom methods new
 setClass("textmodel_wordshoal_fitted",
          slots = c(tol = "numeric",
                    dir = "numeric",
@@ -71,11 +72,6 @@ setClass("textmodel_wordshoal_predicted",
 #' @export
 textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     UseMethod("textmodel_wordshoal")
-}
-
-#' @export
-textmodel_wordshoal.default <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
-    stop(friendly_class_undefined_message(class(x), "textmodel_wordshoal"))
 }
 
 #' @export
@@ -265,6 +261,8 @@ setMethod("show", signature(object = "textmodel_wordshoal_predicted"),
 #' Summarize a fitted textmodel_wordshoal object.
 #' 
 #' \code{summary} method for a fitted \code{\link{textmodel_wordshoal}} object.
+#' @param object results of \code{\link{textmodel_wordshoal}} to be summarized
+#' @param ... additional arguments passed to \code{print}
 #' @export
 #' @method summary textmodel_wordshoal_fitted
 summary.textmodel_wordshoal_fitted <- function(object, ...) {

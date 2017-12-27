@@ -6,6 +6,11 @@
 \usage{
 \method{summary}{textmodel_wordshoal_fitted}(object, ...)
 }
+\arguments{
+\item{object}{results of \code{\link{textmodel_wordshoal}} to be summarized}
+
+\item{...}{additional arguments passed to \code{print}}
+}
 \description{
 \code{summary} method for a fitted \code{\link{textmodel_wordshoal}} object.
 }
