@@ -1,0 +1,38 @@
+---
+output: github_document
+---
+
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "##",
+  fig.path = "man/images/"
+)
+```
+
+# quanteda.collocationsdev
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/wordshoal)](https://cran.r-project.org/package=wordshoal)
+[![Travis-CI Build Status](https://travis-ci.org/<USERNAME>/<REPO>.svg?branch=master)](https://travis-ci.org/<USERNAME>/<REPO>)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/<USERNAME>/<REPO>?branch=master&svg=true)](https://ci.appveyor.com/project/<USERNAME>/<REPO>)
+[![Coverage Status](https://img.shields.io/codecov/c/github/<USERNAME>/<REPO>/master.svg)](https://codecov.io/github/<USERNAME>/<REPO>?branch=master)
+
+## About
+
+An extension package for [**quanteda**](http://quanteda.io) for computing the "wordshoal" text model from Benjamin E. Lauderdale and Alexander Herzog. 2016. "[Measuring Political Positions from Legislative Speech.](https://www.cambridge.org/core/journals/political-analysis/article/measuring-political-positions-from-legislative-speech/35D8B53C4B7367185325C25BBE5F42B4)" _Political Analysis_ 24 (3, July): 374-394.
+
+**Maintainer:** [Benjamin Lauderdale](B.E.lauderdale@lse.ac.uk).
+
+## How to Install
+
+```{r eval = FALSE}
+# devtools package required to install quanteda from Github 
+devtools::install_github("kbenoit/wordshoal") 
+```
+
+
+
+## How to Use 
+
+See `?wordshoal::textmodel_wordshoal`.
