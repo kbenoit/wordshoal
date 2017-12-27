@@ -1,3 +1,5 @@
+# class definitions -------------
+
 #' @import quanteda
 #' @importFrom methods new
 setClass("textmodel_wordshoal_fitted",
@@ -19,6 +21,7 @@ setClass("textmodel_wordshoal_predicted",
          prototype = list(level = 0.95),
          contains = "textmodel_wordfish_fitted")
 
+# textmodel_wordshoal -----------
 
 #' Wordshoal text model
 #' 
@@ -230,6 +233,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
 }
 
 
+# base R methods -----------
 
 #' Print method for textmodel_wordshoal_fitted
 #' 
