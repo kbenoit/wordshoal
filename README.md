@@ -1,13 +1,13 @@
 
-# quanteda.collocationsdev
+# wordshoal
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/wordshoal)](https://cran.r-project.org/package=wordshoal)
 [![Travis-CI Build
-Status](https://travis-ci.org/%3CUSERNAME%3E/%3CREPO%3E.svg?branch=master)](https://travis-ci.org/%3CUSERNAME%3E/%3CREPO%3E)
+Status](https://travis-ci.org/kbenoit/wordshoal.svg?branch=master)](https://travis-ci.org/kbenoit/wordshoal)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/%3CUSERNAME%3E/%3CREPO%3E?branch=master&svg=true)](https://ci.appveyor.com/project/%3CUSERNAME%3E/%3CREPO%3E)
+Status](https://ci.appveyor.com/api/projects/status/github/kbenoit/wordshoal?branch=master&svg=true)](https://ci.appveyor.com/project/kbenoit/wordshoal)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/%3CUSERNAME%3E/%3CREPO%3E/master.svg)](https://codecov.io/github/%3CUSERNAME%3E/%3CREPO%3E?branch=master)
+Status](https://img.shields.io/codecov/c/github/kbenoit/wordshoal/master.svg)](https://codecov.io/github/kbenoit/wordshoal?branch=master)
 
 ## About
 
@@ -17,7 +17,7 @@ Alexander Herzog. 2016. “[Measuring Political Positions from Legislative
 Speech.](https://www.cambridge.org/core/journals/political-analysis/article/measuring-political-positions-from-legislative-speech/35D8B53C4B7367185325C25BBE5F42B4)”
 *Political Analysis* 24 (3, July): 374-394.
 
-**Maintainer:** [Benjamin Lauderdale](B.E.lauderdale@lse.ac.uk).
+**Maintainer:** [Benjamin Lauderdale](B.E.lauderdale@lse.ac.uk)
 
 ## How to Install
 
