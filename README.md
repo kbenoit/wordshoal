@@ -17,6 +17,10 @@ Alexander Herzog. 2016. “[Measuring Political Positions from Legislative
 Speech.](https://www.cambridge.org/core/journals/political-analysis/article/measuring-political-positions-from-legislative-speech/35D8B53C4B7367185325C25BBE5F42B4)”
 *Political Analysis* 24 (3, July): 374-394.
 
+This package was [moved from
+**quanteda**](https://github.com/kbenoit/quanteda/pull/1172) on
+2017-12-27.
+
 **Maintainer:** [Benjamin Lauderdale](B.E.lauderdale@lse.ac.uk)
 
 ## How to Install
