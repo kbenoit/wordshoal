@@ -12,14 +12,23 @@ setClass("textmodel_wordshoal_fitted",
                    groups = "factor",
                    authors = "factor",
                    ll = "numeric",
-                   se.theta = "numeric"),
-         contains = "textmodel_fitted")
+                   se.theta = "numeric",
+                   priors = "numeric", 
+                   phi = "numeric",
+                   docs = "character",
+                   features = "character",
+                   sigma = "numeric",
+                   x = "dfm", 
+                   y = "ANY", 
+                   call = "call", 
+                   dispersion = "character",
+                   method = "character"))
 
 setClass("textmodel_wordshoal_predicted",
          slots = c(newdata = "dfm", level = "numeric",
                    predvals = "data.frame"),
          prototype = list(level = 0.95),
-         contains = "textmodel_wordfish_fitted")
+         contains = "textmodel_wordshoal_fitted")
 
 # textmodel_wordshoal -----------
 
@@ -93,7 +102,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     # if (length(not_enough_rows <- which(lengths(split(docnames(x), authors)) < 2)))
     #     stop("only a single case for the following authors: \n", 
     #          paste(levels(authors)[not_enough_rows], collapse = "\n"))
-
+    
     S <- ndoc(x)
     psi <- rep(NA, S)
     
@@ -117,8 +126,8 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         wfresult <- textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
         
         # Save the results
-        # psi[groups == levels(groups)[j]] <- wfresult$theta
-        psi[groups == levels(groups)[j]] <- wfresult@theta
+        psi[groups == levels(groups)[j]] <- 
+            if(isS4(wfresult)){ wfresult@theta } else { wfresult$theta }
         
         if (j %% 20 == 0) 
             cat(j, " ", sep="") 
@@ -219,7 +228,6 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     ## Return results 
     
     cat("\nElapsed time:", (proc.time() - startTime)[3], "seconds.\n")
-    
     new("textmodel_wordshoal_fitted", 
         tol = tol,
         authors = authors,
