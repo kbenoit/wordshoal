@@ -16,6 +16,8 @@ URL: http://github.com/kbenoit/wordshoal
 Encoding: UTF-8
 BugReports: https://github.com/kbenoit/wordshoal/issues
 LazyData: TRUE
+Remotes:
+    quanteda/quanteda
 Collate:
     textmodel_wordshoal.R
 RoxygenNote: 6.0.1
