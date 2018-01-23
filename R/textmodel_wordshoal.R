@@ -237,11 +237,11 @@ print.textmodel_wordshoal_fitted <- function(x, ...) {
     print(results,...)
 }
 
-setMethod("show", signature(object = "textmodel_wordshoal_fitted"), 
-          function(object) print(object))
-
-setMethod("show", signature(object = "textmodel_wordshoal_predicted"), 
-          function(object) print(object))
+# setMethod("show", signature(object = "textmodel_wordshoal_fitted"), 
+#           function(object) print(object))
+# 
+# setMethod("show", signature(object = "textmodel_wordshoal_predicted"), 
+#           function(object) print(object))
 
 
 #' Summarize a fitted textmodel_wordshoal object.
