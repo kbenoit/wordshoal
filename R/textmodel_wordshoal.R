@@ -1,35 +1,3 @@
-# class definitions -------------
-
-#' @import quanteda
-#' @importFrom methods new
-setClass("textmodel_wordshoal_fitted",
-         slots = c(tol = "numeric",
-                   dir = "numeric",
-                   theta = "numeric",
-                   beta = "numeric",
-                   alpha = "numeric",
-                   psi = "numeric",
-                   groups = "factor",
-                   authors = "factor",
-                   ll = "numeric",
-                   se.theta = "numeric",
-                   priors = "numeric", 
-                   phi = "numeric",
-                   docs = "character",
-                   features = "character",
-                   sigma = "numeric",
-                   x = "dfm", 
-                   y = "ANY", 
-                   call = "call", 
-                   dispersion = "character",
-                   method = "character"))
-
-setClass("textmodel_wordshoal_predicted",
-         slots = c(newdata = "dfm", level = "numeric",
-                   predvals = "data.frame"),
-         prototype = list(level = 0.95),
-         contains = "textmodel_wordshoal_fitted")
-
 # textmodel_wordshoal -----------
 
 #' Wordshoal text model
@@ -228,7 +196,8 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     ## Return results 
     
     cat("\nElapsed time:", (proc.time() - startTime)[3], "seconds.\n")
-    new("textmodel_wordshoal_fitted", 
+    
+    result <- list(
         tol = tol,
         authors = authors,
         groups = groups,
@@ -237,7 +206,12 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         alpha = alpha,
         psi = psi,
         se.theta = thetaSE,
-        call = match.call())
+        call = match.call()
+    )
+    
+    class(result) <- c("textmodel_wordshoal_fitted", "textmodel", "list")
+    result
+    
 }
 
 
@@ -253,13 +227,13 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
 print.textmodel_wordshoal_fitted <- function(x, ...) {
     cat("Fitted wordshoal model:\n")
     cat("Call:\n\t")
-    print(x@call)
+    print(x$call)
     cat("\nEstimated author positions:\n\n")
-    results <- data.frame(theta = x@theta,
-                          SE = x@se.theta,
-                          lower = x@theta - 1.96*x@se.theta,
-                          upper = x@theta + 1.96*x@se.theta)
-    rownames(results) <- levels(x@authors)
+    results <- data.frame(theta = x$theta,
+                          SE = x$se.theta,
+                          lower = x$theta - 1.96*x$se.theta,
+                          upper = x$theta + 1.96*x$se.theta)
+    rownames(results) <- levels(x$authors)
     print(results,...)
 }
 
@@ -279,15 +253,15 @@ setMethod("show", signature(object = "textmodel_wordshoal_predicted"),
 #' @method summary textmodel_wordshoal_fitted
 summary.textmodel_wordshoal_fitted <- function(object, ...) {
     cat("Call:\n\t")
-    print(object@call)
+    print(object$call)
     
     cat("\nEstimated document positions:\n")
-    results <- data.frame(theta = object@theta,
-                          SE = object@se.theta,
-                          lower = object@theta - 1.96*object@se.theta,
-                          upper = object@theta + 1.96*object@se.theta)
+    results <- data.frame(theta = object$theta,
+                          SE = object$se.theta,
+                          lower = object$theta - 1.96*object$se.theta,
+                          upper = object$theta + 1.96*object$se.theta)
     
-    rownames(results) <- levels(object@authors)
+    rownames(results) <- levels(object$authors)
     print(results, ...)
     invisible(results)
 }
