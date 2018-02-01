@@ -1,9 +1,10 @@
 Package: wordshoal
-Version: 0.1
+Version: 0.1.1
 Title: quanteda textmodel extensions for the wordshoal textmodel
 Description: Extends quanteda to provide an implementation of the Lauderdale and Herzog (2016) "wordshoal" model.
 Authors@R: c( person("Benjamin", "Lauderdale", email = "B.E.lauderdale@lse.ac.uk", role = c("aut")),
-    person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role = c("ctb", "cre")) )
+    person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role = c("ctb", "cre")),
+    person("Akitaka", "Matsuo", email = "a.matsuo@lse.ac.uk", role = c("ctb")))
 Maintainer: Benjamin Lauderdale <B.E.lauderdale@lse.ac.uk>
 License: GPL-3
 Depends:
