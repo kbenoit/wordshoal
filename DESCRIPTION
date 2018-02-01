@@ -1,9 +1,5 @@
 Package: wordshoal
-<<<<<<< HEAD
 Version: 0.2
-=======
-Version: 0.1.1
->>>>>>> c3e2cb8731b73b69385297072fde4cb3e814f647
 Title: quanteda textmodel extensions for the wordshoal textmodel
 Description: Extends quanteda to provide an implementation of the Lauderdale and Herzog (2016) "wordshoal" model.
 Authors@R: c( person("Benjamin", "Lauderdale", email = "B.E.lauderdale@lse.ac.uk", role = c("aut")),
@@ -20,8 +16,4 @@ URL: http://github.com/kbenoit/wordshoal
 Encoding: UTF-8
 BugReports: https://github.com/kbenoit/wordshoal/issues
 LazyData: TRUE
-Remotes:
-    quanteda/quanteda
-Collate:
-    textmodel_wordshoal.R
 RoxygenNote: 6.0.1
