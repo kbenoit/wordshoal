@@ -46,7 +46,6 @@ Returns estimates of relative author positions across the full
 }
 \examples{
 \dontrun{
-data(data_corpus_irish30, package = "quantedaData")
 iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE)
 wordshoalfit <- 
     textmodel_wordshoal(iedfm, dir = c(7,1),
