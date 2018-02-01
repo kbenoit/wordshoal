@@ -21,7 +21,8 @@ This package was [moved from
 **quanteda**](https://github.com/kbenoit/quanteda/pull/1172) on
 2017-12-27.
 
-**Maintainer:** [Benjamin Lauderdale](B.E.lauderdale@lse.ac.uk)
+**Maintainer:** [Benjamin Lauderdale](B.E.lauderdale@lse.ac.uk), 
+[Akitaka Matsuo](a.matsuo@lse.ac.uk)
 
 ## How to Install
 

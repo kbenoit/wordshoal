@@ -1,26 +1,3 @@
-# class definitions -------------
-
-#' @import quanteda
-#' @importFrom methods new
-setClass("textmodel_wordshoal_fitted",
-         slots = c(tol = "numeric",
-                   dir = "numeric",
-                   theta = "numeric",
-                   beta = "numeric",
-                   alpha = "numeric",
-                   psi = "numeric",
-                   groups = "factor",
-                   authors = "factor",
-                   ll = "numeric",
-                   se.theta = "numeric"),
-         contains = "textmodel_fitted")
-
-setClass("textmodel_wordshoal_predicted",
-         slots = c(newdata = "dfm", level = "numeric",
-                   predvals = "data.frame"),
-         prototype = list(level = 0.95),
-         contains = "textmodel_wordfish_fitted")
-
 # textmodel_wordshoal -----------
 
 #' Wordshoal text model
@@ -92,7 +69,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     # if (length(not_enough_rows <- which(lengths(split(docnames(x), authors)) < 2)))
     #     stop("only a single case for the following authors: \n", 
     #          paste(levels(authors)[not_enough_rows], collapse = "\n"))
-
+    
     S <- ndoc(x)
     psi <- rep(NA, S)
     
@@ -116,8 +93,8 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         wfresult <- textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
         
         # Save the results
-        # psi[groups == levels(groups)[j]] <- wfresult$theta
-        psi[groups == levels(groups)[j]] <- wfresult@theta
+        psi[groups == levels(groups)[j]] <- 
+            if(isS4(wfresult)){ wfresult@theta } else { wfresult$theta }
         
         if (j %% 20 == 0) 
             cat(j, " ", sep="") 
@@ -219,7 +196,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     
     cat("\nElapsed time:", (proc.time() - startTime)[3], "seconds.\n")
     
-    new("textmodel_wordshoal_fitted", 
+    result <- list(
         tol = tol,
         authors = authors,
         groups = groups,
@@ -228,7 +205,12 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         alpha = alpha,
         psi = psi,
         se.theta = thetaSE,
-        call = match.call())
+        call = match.call()
+    )
+    
+    class(result) <- c("textmodel_wordshoal_fitted", "textmodel", "list")
+    result
+    
 }
 
 
@@ -244,21 +226,21 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
 print.textmodel_wordshoal_fitted <- function(x, ...) {
     cat("Fitted wordshoal model:\n")
     cat("Call:\n\t")
-    print(x@call)
+    print(x$call)
     cat("\nEstimated author positions:\n\n")
-    results <- data.frame(theta = x@theta,
-                          SE = x@se.theta,
-                          lower = x@theta - 1.96*x@se.theta,
-                          upper = x@theta + 1.96*x@se.theta)
-    rownames(results) <- levels(x@authors)
+    results <- data.frame(theta = x$theta,
+                          SE = x$se.theta,
+                          lower = x$theta - 1.96*x$se.theta,
+                          upper = x$theta + 1.96*x$se.theta)
+    rownames(results) <- levels(x$authors)
     print(results,...)
 }
 
-setMethod("show", signature(object = "textmodel_wordshoal_fitted"), 
-          function(object) print(object))
-
-setMethod("show", signature(object = "textmodel_wordshoal_predicted"), 
-          function(object) print(object))
+# setMethod("show", signature(object = "textmodel_wordshoal_fitted"), 
+#           function(object) print(object))
+# 
+# setMethod("show", signature(object = "textmodel_wordshoal_predicted"), 
+#           function(object) print(object))
 
 
 #' Summarize a fitted textmodel_wordshoal object.
@@ -270,15 +252,15 @@ setMethod("show", signature(object = "textmodel_wordshoal_predicted"),
 #' @method summary textmodel_wordshoal_fitted
 summary.textmodel_wordshoal_fitted <- function(object, ...) {
     cat("Call:\n\t")
-    print(object@call)
+    print(object$call)
     
     cat("\nEstimated document positions:\n")
-    results <- data.frame(theta = object@theta,
-                          SE = object@se.theta,
-                          lower = object@theta - 1.96*object@se.theta,
-                          upper = object@theta + 1.96*object@se.theta)
+    results <- data.frame(theta = object$theta,
+                          SE = object$se.theta,
+                          lower = object$theta - 1.96*object$se.theta,
+                          upper = object$theta + 1.96*object$se.theta)
     
-    rownames(results) <- levels(object@authors)
+    rownames(results) <- levels(object$authors)
     print(results, ...)
     invisible(results)
 }
