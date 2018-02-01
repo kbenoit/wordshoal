@@ -35,7 +35,6 @@
 #' @author Benjamin Lauderdale and Kenneth Benoit
 #' @keywords textmodel experimental
 #' @examples
-#' \dontrun{
 #' iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE)
 #' wordshoalfit <- 
 #'     textmodel_wordshoal(iedfm, dir = c(7,1),
@@ -46,7 +45,6 @@
 #'                by.x = "row.names", by.y = "member.name")
 #' fitdf <- subset(fitdf, !duplicated(memberID))
 #' aggregate(theta ~ party.name, data = fitdf, mean)
-#' }
 #' @importFrom stats dgamma dnorm
 #' @export
 textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
