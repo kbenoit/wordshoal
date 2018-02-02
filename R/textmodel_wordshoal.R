@@ -56,19 +56,19 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     
     startTime <- proc.time()
     
-    x <- as.dfm(x)
+    x <- quanteda::as.dfm(x)
     groups <- as.factor(groups)
     authors <- as.factor(authors)
     
     # check that no groups or author partitions are a single row
-    if (length(not_enough_rows <- which(lengths(split(docnames(x), groups)) < 2)))
+    if (length(not_enough_rows <- which(lengths(split(quanteda::docnames(x), groups)) < 2)))
         stop("only a single case for the following groups: \n", 
              paste(levels(groups)[not_enough_rows], collapse = "\n"))
     # if (length(not_enough_rows <- which(lengths(split(docnames(x), authors)) < 2)))
     #     stop("only a single case for the following authors: \n", 
     #          paste(levels(authors)[not_enough_rows], collapse = "\n"))
     
-    S <- ndoc(x)
+    S <- quanteda::ndoc(x)
     psi <- rep(NA, S)
     
     N <- nlevels(authors)
@@ -88,7 +88,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         
         # Run wordfish on document group
         # wfresult <- wordfishcpp(as.matrix(groupdfm), c(1, 2), c(0, 0, 1/9, 1), c(1e-2, 1e-4), 1L, 0L)
-        wfresult <- textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
+        wfresult <- quanteda::textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
         
         # Save the results
         psi[groups == levels(groups)[j]] <- 
