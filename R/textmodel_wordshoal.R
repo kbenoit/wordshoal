@@ -35,41 +35,43 @@
 #' @author Benjamin Lauderdale and Kenneth Benoit
 #' @keywords textmodel experimental
 #' @examples
-#' iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE)
+#' \dontrun{
+#' iedfm <- quanteda::dfm(data_corpus_irish30, remove_punct = TRUE)
 #' wordshoalfit <- 
 #'     textmodel_wordshoal(iedfm, dir = c(7,1),
 #'                         groups = docvars(data_corpus_irish30, "debateID"), 
 #'                         authors = docvars(data_corpus_irish30, "member.name"))
 #' fitdf <- merge(as.data.frame(summary(wordshoalfit)),
-#'                docvars(data_corpus_irish30), 
+#'                quanteda::docvars(data_corpus_irish30), 
 #'                by.x = "row.names", by.y = "member.name")
 #' fitdf <- subset(fitdf, !duplicated(memberID))
 #' aggregate(theta ~ party.name, data = fitdf, mean)
+#' }
 #' @importFrom stats dgamma dnorm
 #' @export
 textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     UseMethod("textmodel_wordshoal")
 }
 
-#' @importFrom quanteda as.dfm docnames ndoc textmodel_wordfish
 #' @export
+#' @importFrom quanteda as.dfm docnames ndoc textmodel_wordfish colSums
 textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     
     startTime <- proc.time()
     
-    x <- as.dfm(x)
+    x <- quanteda::as.dfm(x)
     groups <- as.factor(groups)
     authors <- as.factor(authors)
     
     # check that no groups or author partitions are a single row
-    if (length(not_enough_rows <- which(lengths(split(docnames(x), groups)) < 2)))
+    if (length(not_enough_rows <- which(lengths(split(quanteda::docnames(x), groups)) < 2)))
         stop("only a single case for the following groups: \n", 
              paste(levels(groups)[not_enough_rows], collapse = "\n"))
-    # if (length(not_enough_rows <- which(lengths(split(docnames(x), authors)) < 2)))
+    # if (length(not_enough_rows <- which(lengths(split(quanteda::docnames(x), authors)) < 2)))
     #     stop("only a single case for the following authors: \n", 
     #          paste(levels(authors)[not_enough_rows], collapse = "\n"))
     
-    S <- ndoc(x)
+    S <- quanteda::ndoc(x)
     psi <- rep(NA, S)
     
     N <- nlevels(authors)
@@ -85,11 +87,11 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         groupdfm <- x[groups == levels(groups)[j], ]
         
         # Remove features that do not appear XX_in at leastone document_XX at least twice 
-        groupdfm <- groupdfm[, colSums(groupdfm) > 1]
+        groupdfm <- quanteda::dfm_trim(groupdfm, min_docfreq = 1)
         
         # Run wordfish on document group
         # wfresult <- wordfishcpp(as.matrix(groupdfm), c(1, 2), c(0, 0, 1/9, 1), c(1e-2, 1e-4), 1L, 0L)
-        wfresult <- textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
+        wfresult <- quanteda::textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
         
         # Save the results
         psi[groups == levels(groups)[j]] <- 

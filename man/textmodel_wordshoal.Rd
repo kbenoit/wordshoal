@@ -45,16 +45,18 @@ Returns estimates of relative author positions across the full
   corpus of texts.
 }
 \examples{
-iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE)
+\dontrun{
+iedfm <- quanteda::dfm(data_corpus_irish30, remove_punct = TRUE)
 wordshoalfit <- 
     textmodel_wordshoal(iedfm, dir = c(7,1),
                         groups = docvars(data_corpus_irish30, "debateID"), 
                         authors = docvars(data_corpus_irish30, "member.name"))
 fitdf <- merge(as.data.frame(summary(wordshoalfit)),
-               docvars(data_corpus_irish30), 
+               quanteda::docvars(data_corpus_irish30), 
                by.x = "row.names", by.y = "member.name")
 fitdf <- subset(fitdf, !duplicated(memberID))
 aggregate(theta ~ party.name, data = fitdf, mean)
+}
 }
 \references{
 Benjamin E. Lauderdale and Alexander Herzog.  2016.
