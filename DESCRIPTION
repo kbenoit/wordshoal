@@ -8,8 +8,8 @@ Authors@R: c( person("Benjamin", "Lauderdale", email = "B.E.lauderdale@lse.ac.uk
 Maintainer: Benjamin Lauderdale <B.E.lauderdale@lse.ac.uk>
 License: GPL-3
 Depends:
-    quanteda,
-    methods
+    R (>= 3.3.0),
+    quanteda
 Suggests:
     covr
 URL: http://github.com/kbenoit/wordshoal

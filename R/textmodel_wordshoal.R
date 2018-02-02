@@ -51,6 +51,7 @@ textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     UseMethod("textmodel_wordshoal")
 }
 
+#' @importFrom quanteda as.dfm docnames ndoc textmodel_wordfish
 #' @export
 textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     

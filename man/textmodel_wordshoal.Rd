@@ -45,7 +45,6 @@ Returns estimates of relative author positions across the full
   corpus of texts.
 }
 \examples{
-\dontrun{
 iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE)
 wordshoalfit <- 
     textmodel_wordshoal(iedfm, dir = c(7,1),
@@ -56,7 +55,6 @@ fitdf <- merge(as.data.frame(summary(wordshoalfit)),
                by.x = "row.names", by.y = "member.name")
 fitdf <- subset(fitdf, !duplicated(memberID))
 aggregate(theta ~ party.name, data = fitdf, mean)
-}
 }
 \references{
 Benjamin E. Lauderdale and Alexander Herzog.  2016.
