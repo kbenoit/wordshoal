@@ -1,6 +1,7 @@
 #' Irish Dail speeches from 2007-2011
 #' 
-#' Speeches and document-level variables from debates in the 30th Dail.
+#' Sampled speeches and document-level variables from debates in the 30th Dail.
+#' Only ten debates are included. 
 #' @format The corpus object for the 30th Dail speeches, with document-level 
 #'   variables for speaker, debate, and speaker's party.
 #' @source Benjamin E Lauderdale and Alexander Herzog.  2016. "A Scaling Model 

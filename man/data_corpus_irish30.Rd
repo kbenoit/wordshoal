@@ -14,7 +14,8 @@ Benjamin E Lauderdale and Alexander Herzog.  2016. "A Scaling Model
 data_corpus_irish30
 }
 \description{
-Speeches and document-level variables from debates in the 30th Dail.
+Sampled speeches and document-level variables from debates in the 30th Dail.
+Only ten debates are included.
 }
 \examples{
 summary(data_corpus_irish30, 5)
