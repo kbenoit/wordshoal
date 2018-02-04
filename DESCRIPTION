@@ -9,8 +9,10 @@ Maintainer: Benjamin Lauderdale <B.E.lauderdale@lse.ac.uk>
 License: GPL-3
 Depends:
     R (>= 3.4.0),
-    quanteda,
     methods
+Imports:
+    quanteda,
+    stringi
 Suggests:
     covr
 URL: http://github.com/kbenoit/wordshoal
