@@ -47,7 +47,6 @@ Returns estimates of relative author positions across the full
 \examples{
 require(quanteda)
 iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE) 
-
 wordshoalfit <- 
     textmodel_wordshoal(iedfm, dir = c(7,1),
                         groups = docvars(data_corpus_irish30, "debateID"), 

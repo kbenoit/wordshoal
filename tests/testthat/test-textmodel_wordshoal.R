@@ -43,3 +43,14 @@ test_that("print/summary works for textmodel_wordshoal object", {
     
 })
 
+test_that("textmodel_wordshoal works", {
+    wordshoalfit <- textmodel_wordshoal(ie_dfm, dir = c(7,1),
+                                        groups = docvars(ie_corpus, "debateID"), 
+                                        authors = docvars(ie_corpus, "member.name"))
+    expect_is(wordshoalfit, "list")
+    expect_is(wordshoalfit, "textmodel_wordshoal_fitted")
+    expect_identical(
+        names(wordshoalfit),
+        c("tol", "authors", "groups", "theta", "beta", "alpha", "psi", "se.theta", "call")
+    )
+})

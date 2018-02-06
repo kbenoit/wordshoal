@@ -57,6 +57,7 @@ textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
 }
 
 #' @export
+#' @importFrom quanteda as.dfm docnames ndoc textmodel_wordfish colSums
 textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     
     startTime <- proc.time()
@@ -69,7 +70,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     if (length(not_enough_rows <- which(lengths(split(quanteda::docnames(x), groups)) < 2)))
         stop("only a single case for the following groups: \n", 
              paste(levels(groups)[not_enough_rows], collapse = "\n"))
-    # if (length(not_enough_rows <- which(lengths(split(docnames(x), authors)) < 2)))
+    # if (length(not_enough_rows <- which(lengths(split(quanteda::docnames(x), authors)) < 2)))
     #     stop("only a single case for the following authors: \n", 
     #          paste(levels(authors)[not_enough_rows], collapse = "\n"))
     
@@ -88,7 +89,11 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         groupdfm <- x[groups == levels(groups)[j], ]
         
         # Remove features that do not appear XX_in at leastone document_XX at least twice 
+<<<<<<< HEAD
         groupdfm <- groupdfm[, quanteda::colSums(groupdfm) > 1]
+=======
+        groupdfm <- quanteda::dfm_trim(groupdfm, min_docfreq = 1)
+>>>>>>> master
         
         # Run wordfish on document group
         # wfresult <- wordfishcpp(as.matrix(groupdfm), c(1, 2), c(0, 0, 1/9, 1), c(1e-2, 1e-4), 1L, 0L)
