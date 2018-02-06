@@ -48,7 +48,7 @@ test_that("textmodel_wordshoal works", {
                                         groups = docvars(ie_corpus, "debateID"), 
                                         authors = docvars(ie_corpus, "member.name"))
     expect_is(wordshoalfit, "list")
-    expect_is(wordshoalfit, "textmodel_wordshoal_fitted")
+    expect_is(wordshoalfit, "textmodel_wordshoal")
     expect_identical(
         names(wordshoalfit),
         c("tol", "authors", "groups", "theta", "beta", "alpha", "psi", "se.theta", "call")

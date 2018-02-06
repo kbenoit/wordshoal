@@ -89,12 +89,8 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         groupdfm <- x[groups == levels(groups)[j], ]
         
         # Remove features that do not appear XX_in at leastone document_XX at least twice 
-<<<<<<< HEAD
-        groupdfm <- groupdfm[, quanteda::colSums(groupdfm) > 1]
-=======
         groupdfm <- quanteda::dfm_trim(groupdfm, min_docfreq = 1)
->>>>>>> master
-        
+
         # Run wordfish on document group
         # wfresult <- wordfishcpp(as.matrix(groupdfm), c(1, 2), c(0, 0, 1/9, 1), c(1e-2, 1e-4), 1L, 0L)
         wfresult <- quanteda::textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
