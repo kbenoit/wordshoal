@@ -45,7 +45,7 @@ Returns estimates of relative author positions across the full
   corpus of texts.
 }
 \examples{
-require(quanteda)
+library("quanteda")
 iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE) 
 
 wordshoalfit <- 
