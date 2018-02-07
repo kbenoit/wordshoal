@@ -32,10 +32,11 @@
 #'   "\href{https://www.cambridge.org/core/journals/political-analysis/article/measuring-political-positions-from-legislative-speech/35D8B53C4B7367185325C25BBE5F42B4}{Measuring
 #'    Political Positions from Legislative Speech}." \emph{Political Analysis}
 #'   24 (3, July): 374-394.
+#' @import quanteda
 #' @author Benjamin Lauderdale and Kenneth Benoit
 #' @keywords textmodel experimental
 #' @examples
-#' require(quanteda)
+#' library("quanteda")
 #' iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE) 
 #' 
 #' wordshoalfit <- 
@@ -57,7 +58,6 @@ textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
 }
 
 #' @export
-#' @importFrom quanteda as.dfm docnames ndoc textmodel_wordfish colSums
 textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     
     startTime <- proc.time()
