@@ -10,7 +10,7 @@ License: GPL-3
 Depends:
     R (>= 3.4.0)
 Imports:
-    quanteda,
+    quanteda (>=1.0.2),
     stringi
 Suggests:
     testthat,
