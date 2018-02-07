@@ -7,14 +7,17 @@
 \format{The corpus object for the 30th Dail speeches, with document-level 
   variables for speaker, debate, and speaker's party.}
 \source{
-Benjamin E Lauderdale and Alexander Herzog.  2016. "A Scaling Model 
-  for Estimating Time-Series Party Positions from Texts." \emph{Political Analysis}.
+Benjamin E. Lauderdale and Alexander Herzog.  2016.
+  "\href{https://www.cambridge.org/core/journals/political-analysis/article/measuring-political-positions-from-legislative-speech/35D8B53C4B7367185325C25BBE5F42B4}{Measuring
+   Political Positions from Legislative Speech}." \emph{Political Analysis}
+  24 (3, July): 374-394.
 }
 \usage{
 data_corpus_irish30
 }
 \description{
-Speeches and document-level variables from debates in the 30th Dail.
+Sampled speeches and document-level variables from debates in the 30th Dail.
+Only ten debates are included.
 }
 \examples{
 summary(data_corpus_irish30, 5)

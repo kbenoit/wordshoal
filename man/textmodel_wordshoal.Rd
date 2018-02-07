@@ -22,7 +22,7 @@ authors such that \eqn{\hat{\theta}_{dir[1]} < \hat{\theta}_{dir[2]}}}
 log-posterior of the model}
 }
 \value{
-An object of class textmodel_fitted_wordshoal.  This is a list 
+An object of class textmodel_wordshoal.  This is a list 
   containing: \item{tol}{log-posterior tolerance used in fitting} 
   \item{dir}{global identification of the dimension} \item{theta}{estimated
   document positions} \item{beta}{debate marginal effects} 
@@ -45,18 +45,21 @@ Returns estimates of relative author positions across the full
   corpus of texts.
 }
 \examples{
-\dontrun{
-iedfm <- quanteda::dfm(data_corpus_irish30, remove_punct = TRUE)
+library("quanteda")
+iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE) 
+
 wordshoalfit <- 
     textmodel_wordshoal(iedfm, dir = c(7,1),
                         groups = docvars(data_corpus_irish30, "debateID"), 
                         authors = docvars(data_corpus_irish30, "member.name"))
-fitdf <- merge(as.data.frame(summary(wordshoalfit)),
-               quanteda::docvars(data_corpus_irish30), 
-               by.x = "row.names", by.y = "member.name")
+summary(wordshoalfit)                    
+author_positions <- summary(wordshoalfit)$estimated.author.positions
+author_positions$row_names <- rownames(author_positions)
+fitdf <- merge(author_positions,
+               docvars(data_corpus_irish30), 
+               by.x = "row_names", by.y = "member.name")
 fitdf <- subset(fitdf, !duplicated(memberID))
 aggregate(theta ~ party.name, data = fitdf, mean)
-}
 }
 \references{
 Benjamin E. Lauderdale and Alexander Herzog.  2016.

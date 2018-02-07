@@ -17,7 +17,7 @@
 #'   authors such that \eqn{\hat{\theta}_{dir[1]} < \hat{\theta}_{dir[2]}}
 #' @param tol a convergence threshold for the
 #'   log-posterior of the model
-#' @return An object of class textmodel_fitted_wordshoal.  This is a list 
+#' @return An object of class textmodel_wordshoal.  This is a list 
 #'   containing: \item{tol}{log-posterior tolerance used in fitting} 
 #'   \item{dir}{global identification of the dimension} \item{theta}{estimated
 #'   document positions} \item{beta}{debate marginal effects} 
@@ -32,21 +32,25 @@
 #'   "\href{https://www.cambridge.org/core/journals/political-analysis/article/measuring-political-positions-from-legislative-speech/35D8B53C4B7367185325C25BBE5F42B4}{Measuring
 #'    Political Positions from Legislative Speech}." \emph{Political Analysis}
 #'   24 (3, July): 374-394.
+#' @import quanteda
 #' @author Benjamin Lauderdale and Kenneth Benoit
 #' @keywords textmodel experimental
 #' @examples
-#' \dontrun{
-#' iedfm <- quanteda::dfm(data_corpus_irish30, remove_punct = TRUE)
+#' library("quanteda")
+#' iedfm <- dfm(data_corpus_irish30, remove_punct = TRUE) 
+#' 
 #' wordshoalfit <- 
 #'     textmodel_wordshoal(iedfm, dir = c(7,1),
 #'                         groups = docvars(data_corpus_irish30, "debateID"), 
 #'                         authors = docvars(data_corpus_irish30, "member.name"))
-#' fitdf <- merge(as.data.frame(summary(wordshoalfit)),
-#'                quanteda::docvars(data_corpus_irish30), 
-#'                by.x = "row.names", by.y = "member.name")
+#' summary(wordshoalfit)                    
+#' author_positions <- summary(wordshoalfit)$estimated.author.positions
+#' author_positions$row_names <- rownames(author_positions)
+#' fitdf <- merge(author_positions,
+#'                docvars(data_corpus_irish30), 
+#'                by.x = "row_names", by.y = "member.name")
 #' fitdf <- subset(fitdf, !duplicated(memberID))
 #' aggregate(theta ~ party.name, data = fitdf, mean)
-#' }
 #' @importFrom stats dgamma dnorm
 #' @export
 textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
@@ -54,7 +58,6 @@ textmodel_wordshoal <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
 }
 
 #' @export
-#' @importFrom quanteda as.dfm docnames ndoc textmodel_wordfish colSums
 textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3) {
     
     startTime <- proc.time()
@@ -80,7 +83,6 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
     ## FIRST-LEVEL SCALING ##
     
     cat("\nScaling ", M, " document groups", sep="")
-    
     for (j in 1:M) {
         
         # Extract dfm rows for current document group
@@ -88,7 +90,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         
         # Remove features that do not appear XX_in at leastone document_XX at least twice 
         groupdfm <- quanteda::dfm_trim(groupdfm, min_docfreq = 1)
-        
+
         # Run wordfish on document group
         # wfresult <- wordfishcpp(as.matrix(groupdfm), c(1, 2), c(0, 0, 1/9, 1), c(1e-2, 1e-4), 1L, 0L)
         wfresult <- quanteda::textmodel_wordfish(groupdfm, tol = c(tol, 1e-8))
@@ -209,7 +211,7 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
         call = match.call()
     )
     
-    class(result) <- c("textmodel_wordshoal_fitted", "textmodel", "list")
+    class(result) <- c("textmodel_wordshoal", "textmodel", "list")
     result
     
 }
@@ -217,24 +219,30 @@ textmodel_wordshoal.dfm <- function(x, groups, authors, dir = c(1,2), tol = 1e-3
 
 # base R methods -----------
 
-#' Print method for textmodel_wordshoal_fitted
+#' Print method for textmodel_wordshoal
 #' 
 #' Provides a print method for this class of object.
 #' @param x for print method, the object to be printed
 #' @param ... additional arguments passed to \code{\link{print}}
-#' @method print textmodel_wordshoal_fitted
+#' @method print textmodel_wordshoal
 #' @keywords internal
-print.textmodel_wordshoal_fitted <- function(x, ...) {
-    cat("Fitted wordshoal model:\n")
+#' @export
+print.textmodel_wordshoal <- function(x, ...) {
+    #cat("Fitted wordshoal model:\n")
     cat("Call:\n\t")
     print(x$call)
-    cat("\nEstimated author positions:\n\n")
-    results <- data.frame(theta = x$theta,
-                          SE = x$se.theta,
-                          lower = x$theta - 1.96*x$se.theta,
-                          upper = x$theta + 1.96*x$se.theta)
-    rownames(results) <- levels(x$authors)
-    print(results,...)
+    cat("\n",
+        length(unique(x$authors)), " authors; ",
+        length(unique(x$groups)), " groups.",
+        "\n",
+        sep = "")
+    # cat("\nEstimated author positions:\n\n")
+    # results <- data.frame(theta = x$theta,
+    #                       SE = x$se.theta,
+    #                       lower = x$theta - 1.96*x$se.theta,
+    #                       upper = x$theta + 1.96*x$se.theta)
+    # rownames(results) <- levels(x$authors)
+    # print(results,...)
 }
 
 # setMethod("show", signature(object = "textmodel_wordshoal_fitted"), 
@@ -250,18 +258,32 @@ print.textmodel_wordshoal_fitted <- function(x, ...) {
 #' @param object results of \code{\link{textmodel_wordshoal}} to be summarized
 #' @param ... additional arguments passed to \code{print}
 #' @export
-#' @method summary textmodel_wordshoal_fitted
-summary.textmodel_wordshoal_fitted <- function(object, ...) {
-    cat("Call:\n\t")
-    print(object$call)
-    
-    cat("\nEstimated document positions:\n")
-    results <- data.frame(theta = object$theta,
-                          SE = object$se.theta,
-                          lower = object$theta - 1.96*object$se.theta,
-                          upper = object$theta + 1.96*object$se.theta)
-    
-    rownames(results) <- levels(object$authors)
-    print(results, ...)
-    invisible(results)
+#' @method summary textmodel_wordshoal
+summary.textmodel_wordshoal <- function(object, ...) {
+    # cat("Call:\n\t")
+    # print(object$call)
+    # 
+    # cat("\nEstimated document positions:\n")
+    stat <- data.frame(
+        theta = object$theta,
+        se = object$se.theta,
+        row.names = levels(object$authors),
+        check.rows = FALSE,
+        stringsAsFactors = FALSE
+    )
+    # results <- data.frame(theta = object$theta,
+    #                       SE = object$se.theta,
+    #                       lower = object$theta - 1.96*object$se.theta,
+    #                       upper = object$theta + 1.96*object$se.theta)
+    # 
+    # rownames(results) <- levels(object$authors)
+    result <- list(
+        'call' = object$call,
+        'estimated.author.positions' = as.statistics_textmodel(stat)#,
+  #      'estimated.feature.scores' = as.coefficients_textmodel(head(coef(object)$features, n))
+    )
+    return(as.summary.textmodel(result))
+    # print(results, ...)
+    # invisible(results)
 }
+
