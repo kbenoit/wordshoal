@@ -1,5 +1,5 @@
 Package: wordshoal
-Version: 0.3
+Version: 0.4
 Title: quanteda textmodel extensions for the wordshoal textmodel
 Description: Extends quanteda to provide an implementation of the Lauderdale and Herzog (2016) "wordshoal" model.
 Authors@R: c( person("Benjamin", "Lauderdale", email = "B.E.lauderdale@lse.ac.uk", role = c("aut")),
@@ -11,6 +11,7 @@ Depends:
     R (>= 3.4.0)
 Imports:
     quanteda (>= 1.0.2),
+    quanteda.textmodels,
     stringi
 Suggests:
     testthat,
@@ -21,4 +22,4 @@ URL: http://github.com/kbenoit/wordshoal
 Encoding: UTF-8
 BugReports: https://github.com/kbenoit/wordshoal/issues
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.0

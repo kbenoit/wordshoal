@@ -4,8 +4,10 @@
 \name{data_corpus_irish30}
 \alias{data_corpus_irish30}
 \title{Irish Dail speeches from 2007-2011}
-\format{The corpus object for the 30th Dail speeches, with document-level 
-  variables for speaker, debate, and speaker's party.}
+\format{
+The corpus object for the 30th Dail speeches, with document-level 
+  variables for speaker, debate, and speaker's party.
+}
 \source{
 Benjamin E. Lauderdale and Alexander Herzog.  2016.
   "\href{https://www.cambridge.org/core/journals/political-analysis/article/measuring-political-positions-from-legislative-speech/35D8B53C4B7367185325C25BBE5F42B4}{Measuring
