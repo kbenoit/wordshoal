@@ -16,8 +16,6 @@ Imports:
 Suggests:
     testthat,
     covr
-Remotes:
-    quanteda/quanteda
 URL: http://github.com/kbenoit/wordshoal
 Encoding: UTF-8
 BugReports: https://github.com/kbenoit/wordshoal/issues
